@@ -1,17 +1,17 @@
 
 $( window ).load(function() {
-  // Run code
-
+// Declare global Variables
 // block size`
 size = 20;
 var canvas = document.getElementById('c');
 var w;
 var h;
-// get some info about the canvas
 
+// get some info about the canvas
 var ctx = canvas.getContext('2d');
 ctx.strokeStyle = "DBDADA";
 ctx.lineWidth = .2;
+
 // how many cells fit on the canvas
 w = ~~ (canvas.width / size);
 h = ~~ (canvas.height / size);
@@ -23,30 +23,44 @@ for (var i = 0; i < w; i++) {
 }
 
 
-
+/****************************************************/
+/*************Auto-run Game of life*****************/
+/****************************************************/
 var interval;
 $("#changesize").click(function () {
     resizeCanvas($("#sqsize").val(), $("#squarenum").val());
 
     //resizeCanvas();
 });
+
+/****************************************************/
+/**********Auto-run Start Button Function************/
+/****************************************************/
 $("#run").click(function () {
     interval = setInterval(function () {
         executeStep()
     }, 1000);
 });
 
+/****************************************************/
+/******************Stop Auto-run *******************/
+/****************************************************/
 $("#stop").click(function () {
     console.log("stopping interval");
     clearInterval(interval);
 
 });
 
-
+/****************************************************/
+/********* Execute Step by Step button  *************/
+/****************************************************/
 $("#step").click(function () {
     executeStep();
 });
 
+/****************************************************/
+/********* Execute Step by Step function *************/
+/****************************************************/ 
 function executeStep() {
     var tempArray = createArray();
 
@@ -68,6 +82,9 @@ function executeStep() {
     console.log("state changed");
 }
 
+/****************************************************/
+/********** Function for canvas resize  *************/
+/****************************************************/
 function resizeCanvas(size, x) {
     $("#c").attr("width", x * size);
     $("#c").attr("height", x * size);
@@ -91,7 +108,9 @@ function resizeCanvas(size, x) {
     }
 }
 
-
+/****************************************************/
+/*Function for creating a new array of canvas Size **/
+/****************************************************/
 function createArray() {
     var state2 = new Array(h);
     for (var y = 0; y < h; ++y) {
@@ -102,13 +121,19 @@ function createArray() {
     }
     return state2;
 }
-// create empty state array to save base state.  
+/****************************************************/
+/*** create empty state array to save base state. ***/
+/****************************************************/
 var state = createArray();
-//Create Second array to save new state. 
+
+/****************************************************/
+/****** Create Second array to save new state *******/
+/****************************************************/
 var state2 = createArray();
 
-
-//Function to fill the canvas based on the array contents. 
+/****************************************************/
+//Function to color the canvas based on the array contents. 
+/****************************************************/
 function fillGridArray(baseArray) {
 
     for (var i = 0; i < w; i++) {
@@ -120,12 +145,17 @@ function fillGridArray(baseArray) {
     }
 
 }
-
+/****************************************************/
+/*************** Empty Canvas Button ****************/
+/****************************************************/
 $("#reset").click(function () {
     reset(state);
     //getGridArray();
 });
 
+/****************************************************/
+/*************** Empty Canvas Function **************/
+/****************************************************/
 function reset(baseArray) {
     for (var i = 0; i < w; i++) {
         for (var j = 0; j < h; j++) {
@@ -137,6 +167,10 @@ function reset(baseArray) {
     }
 }
 
+
+/****************************************************/
+/******Check New status for left border *************/
+/****************************************************/
 function LeftBorder(baseArray) {
     indexArray = 0;
     state2[indexArray] = $.map(baseArray[indexArray], function (a, index) {
@@ -146,6 +180,9 @@ function LeftBorder(baseArray) {
     });
 }
 
+/****************************************************/
+/******Check New status for right border ************/
+/****************************************************/
 function RightBorder(baseArray, indexArray) {
     state2[indexArray] = $.map(baseArray[indexArray], function (a, index) {
         var neighbornum = (parseInt(baseArray[indexArray][index - 1]) || 0) + (parseInt(baseArray[indexArray][index + 1]) || 0) + (parseInt(state[indexArray - 1][index - 1]) || 0) + (parseInt(baseArray[indexArray - 1][index]) || 0) + (parseInt(baseArray[indexArray - 1][index + 1]) || 0);
@@ -155,6 +192,9 @@ function RightBorder(baseArray, indexArray) {
     });
 }
 
+/****************************************************/
+/******Check New status for regular grid ************/
+/****************************************************/
 function CenterGrid(baseArray, indexArray) {
     for (var i = 1; i < (indexArray - 1); i++) {
         state2[i] = $.map(baseArray[i], function (a, index) {
@@ -168,12 +208,17 @@ function CenterGrid(baseArray, indexArray) {
     }
 }
 
+/****************************************************/
+/*** Function for filling the squares in the grid ***/
+/****************************************************/
 function fill(s, gx, gy) {
     ctx.fillStyle = s;
     ctx.fillRect((gx * size) + 1, (gy * size) + 1, size - 2, size - 2);
 }
 
-
+/****************************************************/
+/******Click function for initial state *************/
+/****************************************************/
 //Use the click function to Create the base grid. Everytime a square is clicked, it is saved on the state base array, this is used later to calculate the next state. 
 $(canvas).click(function (e) {
     // get mouse click position
