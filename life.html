@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+<script src="sofia_cgol.js"></script>
+<link rel="stylesheet" type="text/css" href="gol_styling.css">
+
+<title>Game Of Life Sofia</title>
+
+</head>
+<body>
+
+<h1>Welcome to Sofia's Game of life implementation</h1>
+
+<div class="container">
+    <label for="size" class="input-label" >Number of squares:</label>
+    <input class="input-text" type="text" id="squarenum" value="20" />
+</div>
+<div class="container">
+    <label for="size" class="input-label" >Square Size(pixels):</label>
+    <input class="input-text" type="text" id="sqsize" value="20" />
+    <input class="button_change" type="button" id="changesize" value="change" />
+</div>
+<div id="canvas_container">
+    <canvas id="c" width="400" height="400" />
+</div>
+<div class="container">
+    <input class="button" type="button" id="run" value="run" />
+    <input class="button" type="button" id="step" value="step" />
+    <input class="button" type="button" id="reset" value="reset" />
+    <input class="button" type="button" id="stop" value="stop" />
+</div>
+
+</body>
+</html>
